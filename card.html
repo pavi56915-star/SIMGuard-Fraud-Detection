@@ -1,0 +1,3300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SIMGuard - SIM Fraud Detection</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f9;
+    color: #1f2937;
+}
+
+button {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* ================= LOGIN ================= */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eef1f5;
+}
+
+.login-box {
+    width: 420px;
+    background: white;
+    padding: 40px;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.login-subtitle {
+    color: #6b7280;
+    margin-bottom: 30px;
+}
+
+.login-box label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 15px 0 7px;
+}
+
+.login-box input,
+.login-box select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 25px;
+    background: #111827;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.login-message {
+    margin-top: 15px;
+    color: #dc2626;
+    font-size: 13px;
+}
+
+
+/* ================= APPLICATION ================= */
+
+.app {
+    display: none;
+    min-height: 100vh;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 245px;
+    height: 100vh;
+    background: #111827;
+    color: white;
+    padding: 25px 15px;
+    overflow-y: auto;
+}
+
+.sidebar-logo {
+    font-size: 25px;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+.sidebar-description {
+    color: #9ca3af;
+    font-size: 12px;
+    padding: 7px 10px 25px;
+}
+
+.menu-title {
+    color: #6b7280;
+    font-size: 11px;
+    text-transform: uppercase;
+    margin: 20px 10px 8px;
+}
+
+.menu button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 5px;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: #d1d5db;
+    text-align: left;
+    font-size: 14px;
+}
+
+.menu button:hover,
+.menu button.active {
+    background: #374151;
+    color: white;
+}
+
+.sidebar-user {
+    border-top: 1px solid #374151;
+    padding: 20px 10px;
+    margin-top: 25px;
+}
+
+.sidebar-user small {
+    color: #9ca3af;
+}
+
+.logout-btn {
+    margin-top: 12px;
+    padding: 8px 15px;
+    background: #374151;
+    border: none;
+    border-radius: 6px;
+    color: white;
+}
+
+
+/* ================= MAIN ================= */
+
+.main {
+    margin-left: 245px;
+    padding: 30px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.header {
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.header p {
+    color: #6b7280;
+}
+
+
+/* ================= CARDS ================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 11px;
+    border: 1px solid #e5e7eb;
+}
+
+.card-title {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.card-value {
+    font-size: 29px;
+    font-weight: bold;
+    margin: 9px 0;
+}
+
+.green {
+    color: #16a34a;
+}
+
+.red {
+    color: #dc2626;
+}
+
+.yellow {
+    color: #ca8a04;
+}
+
+.blue {
+    color: #2563eb;
+}
+
+
+/* ================= PANELS ================= */
+
+.panel {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 11px;
+    padding: 24px;
+    margin-bottom: 22px;
+}
+
+.panel h2 {
+    margin-bottom: 18px;
+    font-size: 20px;
+}
+
+.panel h3 {
+    margin-bottom: 15px;
+}
+
+
+/* ================= GRID ================= */
+
+.two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+
+/* ================= TABLE ================= */
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 13px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+    white-space: nowrap;
+}
+
+th {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+
+/* ================= BADGES ================= */
+
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.badge-low {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge-medium {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-high {
+    background: #ffedd5;
+    color: #c2410c;
+}
+
+.badge-critical {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.badge-pending {
+    background: #e0e7ff;
+    color: #3730a3;
+}
+
+
+/* ================= FORM ================= */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.primary-btn {
+    background: #111827;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 12px 22px;
+    margin-top: 8px;
+    font-weight: bold;
+}
+
+.primary-btn:hover {
+    background: #374151;
+}
+
+
+/* ================= SEARCH ================= */
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 11px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+}
+
+
+/* ================= RISK ================= */
+
+.risk-score-box {
+    text-align: center;
+    padding: 30px;
+}
+
+.risk-score {
+    font-size: 70px;
+    font-weight: bold;
+    margin: 15px;
+}
+
+.risk-label {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.risk-bar {
+    width: 100%;
+    height: 14px;
+    background: #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.risk-fill {
+    height: 100%;
+    width: 87%;
+    background: #dc2626;
+}
+
+
+/* ================= FACTORS ================= */
+
+.factor {
+    margin-bottom: 22px;
+}
+
+.factor-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.factor-background {
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 10px;
+}
+
+.factor-fill {
+    height: 100%;
+    background: #dc2626;
+    border-radius: 10px;
+}
+
+
+/* ================= DECISION ================= */
+
+.decision-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.decision-btn {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 7px;
+    color: white;
+    font-weight: bold;
+}
+
+.approve {
+    background: #16a34a;
+}
+
+.escalate {
+    background: #ca8a04;
+}
+
+.block {
+    background: #dc2626;
+}
+
+.decision-result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+
+/* ================= ALERTS ================= */
+
+.alert {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 7px;
+    background: #fef2f2;
+    border-left: 5px solid #dc2626;
+}
+
+.alert.warning-alert {
+    background: #fffbeb;
+    border-left-color: #ca8a04;
+}
+
+
+/* ================= CHART ================= */
+
+.chart {
+    height: 230px;
+    display: flex;
+    align-items: end;
+    gap: 15px;
+    padding: 20px 10px 0;
+}
+
+.chart-bar {
+    flex: 1;
+    background: #111827;
+    border-radius: 5px 5px 0 0;
+    min-width: 20px;
+}
+
+.chart-labels {
+    display: flex;
+    gap: 15px;
+}
+
+.chart-labels div {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+
+/* ================= AUDIT ================= */
+
+.timeline {
+    border-left: 3px solid #d1d5db;
+    margin-left: 10px;
+    padding-left: 25px;
+}
+
+.timeline-item {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: #111827;
+    border-radius: 50%;
+    position: absolute;
+    left: -31px;
+    top: 4px;
+}
+
+.timeline-item small {
+    color: #6b7280;
+}
+
+
+/* ================= USER MANAGEMENT ================= */
+
+.role-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 9px;
+    padding: 18px;
+    margin-bottom: 12px;
+}
+
+.role-card h3 {
+    margin-bottom: 8px;
+}
+
+.permission {
+    display: inline-block;
+    padding: 5px 9px;
+    background: #f3f4f6;
+    border-radius: 5px;
+    margin: 3px;
+    font-size: 12px;
+}
+
+
+/* ================= SETTINGS ================= */
+
+.setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.setting:last-child {
+    border-bottom: none;
+}
+
+.toggle {
+    width: 48px;
+    height: 25px;
+    background: #16a34a;
+    border-radius: 20px;
+    position: relative;
+}
+
+.toggle::after {
+    content: "";
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    background: white;
+    border-radius: 50%;
+    right: 3px;
+    top: 3px;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width: 1100px) {
+
+    .cards {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .two-column {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media(max-width: 750px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .container {
+        display: block;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .decision-buttons {
+        flex-direction: column;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOGIN MODULE
+===================================================== -->
+
+<div
+    class="login-page"
+    id="loginPage"
+>
+
+    <div class="login-box">
+
+        <div class="logo">
+            🛡️ SIMGuard
+        </div>
+
+        <p class="login-subtitle">
+            SIM Fraud Detection & Risk Management
+        </p>
+
+        <h2>Secure Login</h2>
+
+        <label>Work Email</label>
+
+        <input
+            type="email"
+            id="loginEmail"
+            value="analyst@simguard.com"
+        >
+
+        <label>Password</label>
+
+        <input
+            type="password"
+            id="loginPassword"
+            value="123456"
+        >
+
+        <label>Role</label>
+
+        <select id="loginRole">
+
+            <option>Fraud Analyst</option>
+            <option>Verifier</option>
+            <option>Administrator</option>
+
+        </select>
+
+        <button
+            class="login-btn"
+            onclick="login()"
+        >
+            Sign In
+        </button>
+
+        <p
+            class="login-message"
+            id="loginMessage"
+        ></p>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     APPLICATION
+===================================================== -->
+
+<div
+    class="app"
+    id="app"
+>
+
+<div class="container">
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-logo">
+        🛡️ SIMGuard
+    </div>
+
+    <div class="sidebar-description">
+        SIM Fraud Detection System
+    </div>
+
+
+    <div class="menu-title">
+        Main
+    </div>
+
+    <div class="menu">
+
+        <button
+            class="active"
+            onclick="showPage('dashboard', this)"
+        >
+            📊 Dashboard
+        </button>
+
+        <button
+            onclick="showPage('simData', this)"
+        >
+            📱 SIM Data
+        </button>
+
+        <button
+            onclick="showPage('assessment', this)"
+        >
+            🤖 ML Assessment
+        </button>
+
+        <button
+            onclick="showPage('verification', this)"
+        >
+            🔍 Verification
+        </button>
+
+        <button
+            onclick="showPage('alerts', this)"
+        >
+            🚨 Alerts
+        </button>
+
+    </div>
+
+
+    <div class="menu-title">
+        Reports
+    </div>
+
+    <div class="menu">
+
+        <button
+            onclick="showPage('analytics', this)"
+        >
+            📈 Analytics
+        </button>
+
+        <button
+            onclick="showPage('audit', this)"
+        >
+            📋 Audit Trail
+        </button>
+
+    </div>
+
+
+    <div class="menu-title">
+        Administration
+    </div>
+
+    <div class="menu">
+
+        <button
+            onclick="showPage('users', this)"
+        >
+            👥 Users & Roles
+        </button>
+
+        <button
+            onclick="showPage('settings', this)"
+        >
+            ⚙️ Settings
+        </button>
+
+    </div>
+
+
+    <div class="sidebar-user">
+
+        <small>Logged in as</small>
+
+        <br>
+
+        <strong id="loggedRole">
+            Fraud Analyst
+        </strong>
+
+        <br>
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main">
+
+
+<!-- =====================================================
+     DASHBOARD MODULE
+===================================================== -->
+
+<section
+    id="dashboard"
+    class="page active"
+>
+
+    <div class="header">
+
+        <h1>Fraud Operations Dashboard</h1>
+
+        <p>
+            Monitor SIM registrations, identify suspicious
+            accounts and manage fraud cases.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="card-title">
+                Total SIM Accounts
+            </div>
+
+            <div class="card-value">
+                12,840
+            </div>
+
+            <span class="green">
+                +6.8% this month
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Average Fraud Score
+            </div>
+
+            <div class="card-value">
+                31/100
+            </div>
+
+            <span class="green">
+                ↓ 4.2 points
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                High Risk Accounts
+            </div>
+
+            <div class="card-value red">
+                284
+            </div>
+
+            <span class="red">
+                +19 flagged
+            </span>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Pending Verification
+            </div>
+
+            <div class="card-value yellow">
+                47
+            </div>
+
+            <span>
+                12 due today
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="two-column">
+
+
+        <div class="panel">
+
+            <h2>Fraud Risk Distribution</h2>
+
+
+            <div class="factor">
+
+                <div class="factor-header">
+                    <span>Low Risk</span>
+                    <strong>62%</strong>
+                </div>
+
+                <div class="factor-background">
+
+                    <div
+                        class="factor-fill"
+                        style="width:62%;background:#16a34a"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="factor">
+
+                <div class="factor-header">
+                    <span>Medium Risk</span>
+                    <strong>24%</strong>
+                </div>
+
+                <div class="factor-background">
+
+                    <div
+                        class="factor-fill"
+                        style="width:24%;background:#ca8a04"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="factor">
+
+                <div class="factor-header">
+                    <span>High Risk</span>
+                    <strong>11%</strong>
+                </div>
+
+                <div class="factor-background">
+
+                    <div
+                        class="factor-fill"
+                        style="width:11%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="factor">
+
+                <div class="factor-header">
+                    <span>Critical</span>
+                    <strong>3%</strong>
+                </div>
+
+                <div class="factor-background">
+
+                    <div
+                        class="factor-fill"
+                        style="width:3%;background:#991b1b"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <h2>Urgent Fraud Queue</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+                        <th>SIM</th>
+                        <th>Score</th>
+                        <th>Risk</th>
+                    </tr>
+
+                    <tr>
+                        <td>SIM-7842</td>
+                        <td>92</td>
+                        <td>
+                            <span class="badge badge-critical">
+                                Critical
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>SIM-7719</td>
+                        <td>84</td>
+                        <td>
+                            <span class="badge badge-high">
+                                High
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>SIM-7603</td>
+                        <td>79</td>
+                        <td>
+                            <span class="badge badge-high">
+                                High
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>SIM-7481</td>
+                        <td>68</td>
+                        <td>
+                            <span class="badge badge-medium">
+                                Medium
+                            </span>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Recent SIM Registrations</h2>
+
+        <div class="table-container">
+
+            <table>
+
+                <tr>
+                    <th>SIM ID</th>
+                    <th>Subscriber</th>
+                    <th>KYC</th>
+                    <th>Devices</th>
+                    <th>Risk Score</th>
+                    <th>Status</th>
+                </tr>
+
+                <tr>
+                    <td>SIM-7842</td>
+                    <td>Ravi Kumar</td>
+                    <td>Verified</td>
+                    <td>3</td>
+                    <td class="red">87</td>
+                    <td>
+                        <span class="badge badge-high">
+                            High Risk
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>SIM-7811</td>
+                    <td>Priya Singh</td>
+                    <td>Verified</td>
+                    <td>1</td>
+                    <td class="green">21</td>
+                    <td>
+                        <span class="badge badge-low">
+                            Safe
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>SIM-7790</td>
+                    <td>Arun Kumar</td>
+                    <td>Pending</td>
+                    <td>2</td>
+                    <td class="yellow">65</td>
+                    <td>
+                        <span class="badge badge-medium">
+                            Review
+                        </span>
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SIM DATA MODULE
+===================================================== -->
+
+<section
+    id="simData"
+    class="page"
+>
+
+    <div class="header">
+
+        <h1>SIM Data Management</h1>
+
+        <p>
+            Register subscriber information and collect
+            fraud-related usage features.
+        </p>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>SIM Registration</h2>
+
+
+        <div class="form-grid">
+
+
+            <div>
+
+                <div class="form-group">
+
+                    <label>SIM ID</label>
+
+                    <input
+                        type="text"
+                        id="simId"
+                        value="SIM-7842"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Subscriber Name</label>
+
+                    <input
+                        type="text"
+                        id="subscriberName"
+                        value="Ravi Kumar"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Mobile Number</label>
+
+                    <input
+                        type="text"
+                        id="mobileNumber"
+                        value="+91 98XXXXXX42"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>KYC Status</label>
+
+                    <select id="kycStatus">
+
+                        <option value="verified">
+                            Verified
+                        </option>
+
+                        <option value="pending">
+                            Pending
+                        </option>
+
+                        <option value="failed">
+                            Failed
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>SIM Type</label>
+
+                    <select>
+
+                        <option>Prepaid</option>
+                        <option>Postpaid</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <div class="form-group">
+
+                    <label>Devices Used</label>
+
+                    <input
+                        type="number"
+                        id="devices"
+                        value="3"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Location Changes / Week</label>
+
+                    <input
+                        type="number"
+                        id="locations"
+                        value="6"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Calls / Day</label>
+
+                    <input
+                        type="number"
+                        id="calls"
+                        value="45"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>SMS / Day</label>
+
+                    <input
+                        type="number"
+                        id="sms"
+                        value="18"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Recharge Frequency</label>
+
+                    <select id="recharge">
+
+                        <option value="high">
+                            High
+                        </option>
+
+                        <option value="medium">
+                            Medium
+                        </option>
+
+                        <option value="low">
+                            Low
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            onclick="runAssessment()"
+        >
+            Save SIM & Run Fraud Assessment
+        </button>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>SIM Records</h2>
+
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search SIM ID or subscriber..."
+                onkeyup="searchSIM()"
+            >
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table id="simTable">
+
+                <tr>
+                    <th>SIM ID</th>
+                    <th>Subscriber</th>
+                    <th>KYC</th>
+                    <th>Devices</th>
+                    <th>Location Changes</th>
+                    <th>Risk</th>
+                </tr>
+
+                <tr>
+                    <td>SIM-7842</td>
+                    <td>Ravi Kumar</td>
+                    <td>Verified</td>
+                    <td>3</td>
+                    <td>6</td>
+                    <td>
+                        <span class="badge badge-high">
+                            87
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>SIM-7811</td>
+                    <td>Priya Singh</td>
+                    <td>Verified</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>
+                        <span class="badge badge-low">
+                            21
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>SIM-7790</td>
+                    <td>Arun Kumar</td>
+                    <td>Pending</td>
+                    <td>2</td>
+                    <td>4</td>
+                    <td>
+                        <span class="badge badge-medium">
+                            65
+                        </span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>SIM-7754</td>
+                    <td>Sneha Rao</td>
+                    <td>Verified</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>
+                        <span class="badge badge-low">
+                            18
+                        </span>
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ML ASSESSMENT MODULE
+===================================================== -->
+
+<section
+    id="assessment"
+    class="page"
+>
+
+    <div class="header">
+
+        <h1>ML Fraud Assessment</h1>
+
+        <p>
+            Analyze SIM features and generate a fraud risk score.
+        </p>
+
+    </div>
+
+
+    <div class="two-column">
+
+
+        <div class="panel risk-score-box">
+
+            <h2>Fraud Probability</h2>
+
+            <div
+                class="risk-score"
+                id="riskScore"
+            >
+                87
+            </div>
+
+            <span
+                class="risk-label"
+                id="riskLabel"
+            >
+                HIGH RISK
+            </span>
+
+
+            <div class="risk-bar">
+
+                <div
+                    class="risk-fill"
+                    id="riskFill"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <h2>Assessment Summary</h2>
+
+            <p>
+                <strong>SIM ID:</strong>
+                <span id="assessmentSim">
+                    SIM-7842
+                </span>
+            </p>
+
+            <br>
+
+            <p>
+                <strong>Subscriber:</strong>
+                <span id="assessmentName">
+                    Ravi Kumar
+                </span>
+            </p>
+
+            <br>
+
+            <p>
+                <strong>Recommendation:</strong>
+            </p>
+
+            <p
+                id="recommendation"
+                class="red"
+                style="margin-top:10px;font-weight:bold"
+            >
+                Manual verification recommended.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Top Risk Factors</h2>
+
+
+        <div class="factor">
+
+            <div class="factor-header">
+
+                <span>
+                    Multiple Device Usage
+                </span>
+
+                <strong id="deviceFactor">
+                    82%
+                </strong>
+
+            </div>
+
+            <div class="factor-background">
+
+                <div
+                    class="factor-fill"
+                    id="deviceFactorBar"
+                    style="width:82%"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="factor">
+
+            <div class="factor-header">
+
+                <span>
+                    Frequent Location Changes
+                </span>
+
+                <strong id="locationFactor">
+                    76%
+                </strong>
+
+            </div>
+
+            <div class="factor-background">
+
+                <div
+                    class="factor-fill"
+                    id="locationFactorBar"
+                    style="width:76%"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="factor">
+
+            <div class="factor-header">
+
+                <span>
+                    Usage Pattern
+                </span>
+
+                <strong id="usageFactor">
+                    69%
+                </strong>
+
+            </div>
+
+            <div class="factor-background">
+
+                <div
+                    class="factor-fill"
+                    id="usageFactorBar"
+                    style="width:69%"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="factor">
+
+            <div class="factor-header">
+
+                <span>
+                    KYC Anomaly
+                </span>
+
+                <strong id="kycFactor">
+                    18%
+                </strong>
+
+            </div>
+
+            <div class="factor-background">
+
+                <div
+                    class="factor-fill"
+                    id="kycFactorBar"
+                    style="width:18%"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Assessment Actions</h2>
+
+        <button
+            class="primary-btn"
+            onclick="goToVerification()"
+        >
+            Continue to Verification
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     VERIFICATION MODULE
+===================================================== -->
+
+<section
+    id="verification"
+    class="page"
+>
+
+    <div class="header">
+
+        <h1>Verification Workflow</h1>
+
+        <p>
+            Review the fraud assessment before making a decision.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="card-title">
+                SIM ID
+            </div>
+
+            <div
+                class="card-value"
+                id="verificationSim"
+            >
+                SIM-7842
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Fraud Score
+            </div>
+
+            <div
+                class="card-value red"
+                id="verificationRisk"
+            >
+                87
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                KYC Status
+            </div>
+
+            <div
+                class="card-value"
+                id="verificationKyc"
+            >
+                Verified
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Review Status
+            </div>
+
+            <div class="card-value yellow">
+                Pending
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Verifier Review</h2>
+
+        <div class="form-group">
+
+            <label>Verification Notes</label>
+
+            <textarea
+                id="verificationNotes"
+                rows="5"
+            >Request additional identity proof and verify recent device and location activity.</textarea>
+
+        </div>
+
+
+        <h3>Final Decision</h3>
+
+
+        <div class="decision-buttons">
+
+            <button
+                class="decision-btn approve"
+                onclick="makeDecision('Approved')"
+            >
+                Approve
+            </button>
+
+            <button
+                class="decision-btn escalate"
+                onclick="makeDecision('Escalated')"
+            >
+                Escalate
+            </button>
+
+            <button
+                class="decision-btn block"
+                onclick="makeDecision('Blocked')"
+            >
+                Block
+            </button>
+
+        </div>
+
+
+        <div
+            id="decisionResult"
+            class="decision-result"
+        ></div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Verification Checklist</h2>
+
+        <table>
+
+            <tr>
+                <th>Check</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>KYC Identity</td>
+                <td>
+                    <span class="badge badge-low">
+                        Verified
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Device Pattern</td>
+                <td>
+                    <span class="badge badge-high">
+                        Suspicious
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Location Pattern</td>
+                <td>
+                    <span class="badge badge-high">
+                        Suspicious
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Usage Pattern</td>
+                <td>
+                    <span class="badge badge-medium">
+                        Review
+                    </span>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ALERTS MODULE
+===================================================== -->
+
+<section
+    id="alerts"
+    class="page"
+>
+
+    <div class="header">
+
+        <h1>Fraud Alerts</h1>
+
+        <p>
+            High-risk SIM registrations requiring attention.
+        </p>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Critical Alerts</h2>
+
+
+        <div class="alert">
+
+            <div>
+
+                <strong>SIM-7842</strong>
+
+                <p>
+                    Fraud score is 87%.
+                    Multiple device activity detected.
+                </p>
+
+            </div>
+
+            <span class="badge badge-critical">
+                CRITICAL
+            </span>
+
+        </div>
+
+
+        <div class="alert">
+
+            <div>
+
+                <strong>SIM-7719</strong>
+
+                <p>
+                    Fraud score is 84%.
+                    Unusual registration pattern.
+                </p>
+
+            </div>
+
+            <span class="badge badge-high">
+                HIGH
+            </span>
+
+        </div>
+
+
+        <div class="alert warning-alert">
+
+            <div>
+
+                <strong>SIM-7603</strong>
+
+                <p>
+                    Fraud score is 79%.
+                    Frequent location changes.
+                </p>
+
+            </div>
+
+            <span class="badge badge-medium">
+                REVIEW
+            </span>
+
+        </div>
+
+
+        <div class="alert warning-alert">
+
+            <div>
+
+                <strong>SIM-7481</strong>
+
+                <p>
+                    Fraud score is 68%.
+                    Recharge anomaly detected.
+                </p>
+
+            </div>
+
+            <span class="badge badge-medium">
+                REVIEW
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ANALYTICS MODULE
+===================================================== -->
+
+<section
+    id="analytics"
+    class="page"
+>
+
+    <div class="header">
+
+        <h1>Fraud Analytics</h1>
+
+        <p>
+            Analyze fraud trends and model performance.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="card-title">
+                Flagged Accounts
+            </div>
+
+            <div class="card-value">
+                284
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Confirmed Fraud
+            </div>
+
+            <div class="card-value red">
+                61
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                False Positive Rate
+            </div>
+
+            <div class="card-value">
+                6.2%
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Auto Screened
+            </div>
+
+            <div class="card-value">
+                78%
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="two-column">
+
+
+        <div class="panel">
+
+            <h2>Fraud Cases - Last 7 Days</h2>
+
+            <div class="chart">
+
+                <div
+                    class="chart-bar"
+                    style="height:35%"
+                ></div>
+
+                <div
+                    class="chart-bar"
+                    style="height:50%"
+                ></div>
+
+                <div
+                    class="chart-bar"
+                    style="height:42%"
+                ></div>
+
+                <div
+                    class="chart-bar"
+                    style="height:65%"
+                ></div>
+
+                <div
+                    class="chart-bar"
+                    style="height:55%"
+                ></div>
+
+                <div
+                    class="chart-bar"
+                    style="height:82%"
+                ></div>
+
+                <div
+                    class="chart-bar"
+                    style="height:70%"
+                ></div>
+
+            </div>
+
+
+            <div class="chart-labels">
+
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+                <div>Sun</div>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <h2>Risk Distribution</h2>
+
+            <div class="factor">
+
+                <div class="factor-header">
+                    <span>Low</span>
+                    <strong>62%</strong>
+                </div>
+
+                <div class="factor-background">
+
+                    <div
+                        class="factor-fill"
+                        style="width:62%;background:#16a34a"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="factor">
+
+                <div class="factor-header">
+                    <span>Medium</span>
+                    <strong>24%</strong>
+                </div>
+
+                <div class="factor-background">
+
+                    <div
+                        class="factor-fill"
+                        style="width:24%;background:#ca8a04"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="factor">
+
+                <div class="factor-header">
+                    <span>High</span>
+                    <strong>11%</strong>
+                </div>
+
+                <div class="factor-background">
+
+                    <div
+                        class="factor-fill"
+                        style="width:11%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <div class="factor">
+
+                <div class="factor-header">
+                    <span>Critical</span>
+                    <strong>3%</strong>
+                </div>
+
+                <div class="factor-background">
+
+                    <div
+                        class="factor-fill"
+                        style="width:3%;background:#991b1b"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>ML Model Performance</h2>
+
+        <table>
+
+            <tr>
+                <th>Metric</th>
+                <th>Score</th>
+            </tr>
+
+            <tr>
+                <td>Precision</td>
+                <td>91%</td>
+            </tr>
+
+            <tr>
+                <td>Recall</td>
+                <td>86%</td>
+            </tr>
+
+            <tr>
+                <td>F1 Score</td>
+                <td>88%</td>
+            </tr>
+
+            <tr>
+                <td>AUC</td>
+                <td>0.94</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     AUDIT TRAIL MODULE
+===================================================== -->
+
+<section
+    id="audit"
+    class="page"
+>
+
+    <div class="header">
+
+        <h1>Audit Trail</h1>
+
+        <p>
+            Track system and user actions for every fraud case.
+        </p>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>SIM-7842 Activity</h2>
+
+
+        <div class="timeline">
+
+            <div class="timeline-item">
+
+                <strong>
+                    SIM registration created
+                </strong>
+
+                <p>
+                    Subscriber information was entered.
+                </p>
+
+                <small>
+                    Today, 20:10
+                </small>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <strong>
+                    ML assessment completed
+                </strong>
+
+                <p>
+                    Fraud score generated: 87%.
+                </p>
+
+                <small>
+                    Today, 20:12
+                </small>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <strong>
+                    High-risk alert generated
+                </strong>
+
+                <p>
+                    Case added to fraud queue.
+                </p>
+
+                <small>
+                    Today, 20:13
+                </small>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <strong>
+                    Verification started
+                </strong>
+
+                <p>
+                    Case assigned to Fraud Analyst.
+                </p>
+
+                <small>
+                    Today, 20:18
+                </small>
+
+            </div>
+
+
+            <div
+                class="timeline-item"
+                id="decisionAudit"
+            >
+
+                <strong>
+                    Waiting for final decision
+                </strong>
+
+                <p>
+                    Approve, escalate or block the account.
+                </p>
+
+                <small>
+                    Pending
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     USERS & ROLES MODULE
+===================================================== -->
+
+<section
+    id="users"
+    class="page"
+>
+
+    <div class="header">
+
+        <h1>Users & Roles</h1>
+
+        <p>
+            Manage access based on user responsibilities.
+        </p>
+
+    </div>
+
+
+    <div class="two-column">
+
+
+        <div class="panel">
+
+            <h2>Fraud Analyst</h2>
+
+            <div class="role-card">
+
+                <h3>Access Permissions</h3>
+
+                <span class="permission">
+                    View Dashboard
+                </span>
+
+                <span class="permission">
+                    View SIM Data
+                </span>
+
+                <span class="permission">
+                    Run Assessment
+                </span>
+
+                <span class="permission">
+                    View Alerts
+                </span>
+
+                <span class="permission">
+                    View Analytics
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <h2>Verifier</h2>
+
+            <div class="role-card">
+
+                <h3>Access Permissions</h3>
+
+                <span class="permission">
+                    View Cases
+                </span>
+
+                <span class="permission">
+                    Verify SIM
+                </span>
+
+                <span class="permission">
+                    Approve
+                </span>
+
+                <span class="permission">
+                    Escalate
+                </span>
+
+                <span class="permission">
+                    Block
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="panel">
+
+            <h2>Administrator</h2>
+
+            <div class="role-card">
+
+                <h3>Access Permissions</h3>
+
+                <span class="permission">
+                    All Dashboard Access
+                </span>
+
+                <span class="permission">
+                    User Management
+                </span>
+
+                <span class="permission">
+                    Role Management
+                </span>
+
+                <span class="permission">
+                    System Settings
+                </span>
+
+                <span class="permission">
+                    Audit Trail
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Current Users</h2>
+
+        <table>
+
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>Admin User</td>
+                <td>admin@simguard.com</td>
+                <td>Administrator</td>
+                <td>
+                    <span class="badge badge-low">
+                        Active
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Fraud Analyst</td>
+                <td>analyst@simguard.com</td>
+                <td>Fraud Analyst</td>
+                <td>
+                    <span class="badge badge-low">
+                        Active
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Verification Team</td>
+                <td>verifier@simguard.com</td>
+                <td>Verifier</td>
+                <td>
+                    <span class="badge badge-low">
+                        Active
+                    </span>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     SETTINGS MODULE
+===================================================== -->
+
+<section
+    id="settings"
+    class="page"
+>
+
+    <div class="header">
+
+        <h1>System Settings</h1>
+
+        <p>
+            Configure fraud detection and notification settings.
+        </p>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Fraud Detection Settings</h2>
+
+
+        <div class="setting">
+
+            <div>
+
+                <strong>
+                    Automatic Fraud Screening
+                </strong>
+
+                <p>
+                    Automatically assess new SIM registrations.
+                </p>
+
+            </div>
+
+            <div class="toggle"></div>
+
+        </div>
+
+
+        <div class="setting">
+
+            <div>
+
+                <strong>
+                    High Risk Alerts
+                </strong>
+
+                <p>
+                    Generate alerts for high-risk accounts.
+                </p>
+
+            </div>
+
+            <div class="toggle"></div>
+
+        </div>
+
+
+        <div class="setting">
+
+            <div>
+
+                <strong>
+                    Audit Logging
+                </strong>
+
+                <p>
+                    Record all important system activities.
+                </p>
+
+            </div>
+
+            <div class="toggle"></div>
+
+        </div>
+
+
+        <div class="setting">
+
+            <div>
+
+                <strong>
+                    Email Notifications
+                </strong>
+
+                <p>
+                    Send notifications for critical fraud cases.
+                </p>
+
+            </div>
+
+            <div class="toggle"></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Risk Thresholds</h2>
+
+
+        <div class="form-group">
+
+            <label>
+                Low Risk Maximum
+            </label>
+
+            <input
+                type="number"
+                value="39"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Medium Risk Maximum
+            </label>
+
+            <input
+                type="number"
+                value="69"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                High Risk Maximum
+            </label>
+
+            <input
+                type="number"
+                value="89"
+            >
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            onclick="saveSettings()"
+        >
+            Save Settings
+        </button>
+
+    </div>
+
+</section>
+
+
+</main>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* ================= LOGIN ================= */
+
+function login() {
+
+    const email =
+        document.getElementById("loginEmail").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value.trim();
+
+    const role =
+        document.getElementById("loginRole").value;
+
+
+    if (email === "" || password === "") {
+
+        document.getElementById("loginMessage").innerText =
+            "Please enter email and password.";
+
+        return;
+
+    }
+
+
+    document.getElementById("loginPage")
+        .style.display = "none";
+
+    document.getElementById("app")
+        .style.display = "block";
+
+
+    document.getElementById("loggedRole")
+        .innerText = role;
+
+}
+
+
+/* ================= LOGOUT ================= */
+
+function logout() {
+
+    document.getElementById("app")
+        .style.display = "none";
+
+    document.getElementById("loginPage")
+        .style.display = "flex";
+
+}
+
+
+/* ================= PAGE NAVIGATION ================= */
+
+function showPage(pageId, button) {
+
+    document
+        .querySelectorAll(".page")
+        .forEach(function(page) {
+
+            page.classList.remove("active");
+
+        });
+
+
+    document
+        .getElementById(pageId)
+        .classList.add("active");
+
+
+    document
+        .querySelectorAll(".menu button")
+        .forEach(function(item) {
+
+            item.classList.remove("active");
+
+        });
+
+
+    if (button) {
+
+        button.classList.add("active");
+
+    }
+
+}
+
+
+/* ================= DIRECT PAGE ================= */
+
+function openPage(pageId) {
+
+    document
+        .querySelectorAll(".page")
+        .forEach(function(page) {
+
+            page.classList.remove("active");
+
+        });
+
+
+    document
+        .getElementById(pageId)
+        .classList.add("active");
+
+}
+
+
+/* ================= FRAUD CALCULATION ================= */
+
+function runAssessment() {
+
+    const simId =
+        document.getElementById("simId").value;
+
+    const name =
+        document.getElementById("subscriberName").value;
+
+    const devices =
+        Number(
+            document.getElementById("devices").value
+        );
+
+    const locations =
+        Number(
+            document.getElementById("locations").value
+        );
+
+    const calls =
+        Number(
+            document.getElementById("calls").value
+        );
+
+    const sms =
+        Number(
+            document.getElementById("sms").value
+        );
+
+    const kyc =
+        document.getElementById("kycStatus").value;
+
+    const recharge =
+        document.getElementById("recharge").value;
+
+
+    let score = 15;
+
+
+    /* Device risk */
+
+    if (devices >= 5) {
+
+        score += 30;
+
+    }
+    else if (devices >= 3) {
+
+        score += 20;
+
+    }
+    else if (devices === 2) {
+
+        score += 10;
+
+    }
+
+
+    /* Location risk */
+
+    if (locations >= 7) {
+
+        score += 25;
+
+    }
+    else if (locations >= 5) {
+
+        score += 20;
+
+    }
+    else if (locations >= 3) {
+
+        score += 10;
+
+    }
+
+
+    /* Call usage */
+
+    if (calls >= 60) {
+
+        score += 15;
+
+    }
+    else if (calls >= 40) {
+
+        score += 10;
+
+    }
+
+
+    /* SMS usage */
+
+    if (sms >= 30) {
+
+        score += 10;
+
+    }
+    else if (sms >= 15) {
+
+        score += 5;
+
+    }
+
+
+    /* KYC */
+
+    if (kyc === "pending") {
+
+        score += 10;
+
+    }
+
+    if (kyc === "failed") {
+
+        score += 20;
+
+    }
+
+
+    /* Recharge */
+
+    if (recharge === "high") {
+
+        score += 8;
+
+    }
+
+
+    if (score > 99) {
+
+        score = 99;
+
+    }
+
+
+    /* Update assessment */
+
+    document.getElementById("riskScore")
+        .innerText = score;
+
+    document.getElementById("riskFill")
+        .style.width = score + "%";
+
+
+    document.getElementById("assessmentSim")
+        .innerText = simId;
+
+    document.getElementById("assessmentName")
+        .innerText = name;
+
+
+    /* Device factor */
+
+    let deviceFactor = devices * 20;
+
+    if (deviceFactor > 100) {
+
+        deviceFactor = 100;
+
+    }
+
+
+    /* Location factor */
+
+    let locationFactor = locations * 12;
+
+    if (locationFactor > 100) {
+
+        locationFactor = 100;
+
+    }
+
+
+    /* Usage factor */
+
+    let usageFactor =
+        (calls + sms) / 1.2;
+
+    if (usageFactor > 100) {
+
+        usageFactor = 100;
+
+    }
+
+
+    /* KYC factor */
+
+    let kycFactor = 15;
+
+    if (kyc === "pending") {
+
+        kycFactor = 60;
+
+    }
+
+    if (kyc === "failed") {
+
+        kycFactor = 95;
+
+    }
+
+
+    document.getElementById("deviceFactor")
+        .innerText =
+        Math.round(deviceFactor) + "%";
+
+    document.getElementById("deviceFactorBar")
+        .style.width =
+        deviceFactor + "%";
+
+
+    document.getElementById("locationFactor")
+        .innerText =
+        Math.round(locationFactor) + "%";
+
+    document.getElementById("locationFactorBar")
+        .style.width =
+        locationFactor + "%";
+
+
+    document.getElementById("usageFactor")
+        .innerText =
+        Math.round(usageFactor) + "%";
+
+    document.getElementById("usageFactorBar")
+        .style.width =
+        usageFactor + "%";
+
+
+    document.getElementById("kycFactor")
+        .innerText =
+        kycFactor + "%";
+
+    document.getElementById("kycFactorBar")
+        .style.width =
+        kycFactor + "%";
+
+
+    /* Risk label */
+
+    const label =
+        document.getElementById("riskLabel");
+
+    const recommendation =
+        document.getElementById("recommendation");
+
+
+    if (score >= 80) {
+
+        label.innerText = "CRITICAL RISK";
+
+        label.style.background = "#fee2e2";
+        label.style.color = "#b91c1c";
+
+        recommendation.innerText =
+            "Block or escalate the account for immediate manual verification.";
+
+    }
+    else if (score >= 60) {
+
+        label.innerText = "HIGH RISK";
+
+        label.style.background = "#ffedd5";
+        label.style.color = "#c2410c";
+
+        recommendation.innerText =
+            "Manual verification is recommended before activation.";
+
+    }
+    else if (score >= 40) {
+
+        label.innerText = "MEDIUM RISK";
+
+        label.style.background = "#fef3c7";
+        label.style.color = "#92400e";
+
+        recommendation.innerText =
+            "Review the account for additional suspicious indicators.";
+
+    }
+    else {
+
+        label.innerText = "LOW RISK";
+
+        label.style.background = "#dcfce7";
+        label.style.color = "#166534";
+
+        recommendation.innerText =
+            "No immediate fraud action is required.";
+
+    }
+
+
+    /* Update verification */
+
+    document.getElementById("verificationSim")
+        .innerText = simId;
+
+    document.getElementById("verificationRisk")
+        .innerText = score;
+
+    document.getElementById("verificationKyc")
+        .innerText =
+        kyc.charAt(0).toUpperCase() +
+        kyc.slice(1);
+
+
+    openPage("assessment");
+
+}
+
+
+/* ================= VERIFICATION ================= */
+
+function goToVerification() {
+
+    openPage("verification");
+
+}
+
+
+/* ================= DECISION ================= */
+
+function makeDecision(decision) {
+
+    const result =
+        document.getElementById("decisionResult");
+
+
+    result.innerText =
+        "Final Decision: " + decision;
+
+
+    if (decision === "Approved") {
+
+        result.style.background = "#dcfce7";
+        result.style.color = "#166534";
+
+    }
+
+
+    if (decision === "Escalated") {
+
+        result.style.background = "#fef3c7";
+        result.style.color = "#92400e";
+
+    }
+
+
+    if (decision === "Blocked") {
+
+        result.style.background = "#fee2e2";
+        result.style.color = "#b91c1c";
+
+    }
+
+
+    document.getElementById("decisionAudit")
+        .innerHTML =
+
+        "<strong>Final decision recorded</strong>" +
+        "<p>Case decision: " + decision + "</p>" +
+        "<small>Just now</small>";
+
+}
+
+
+/* ================= SIM SEARCH ================= */
+
+function searchSIM() {
+
+    const input =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+
+    const table =
+        document.getElementById("simTable");
+
+
+    const rows =
+        table.getElementsByTagName("tr");
+
+
+    for (
+        let i = 1;
+        i < rows.length;
+        i++
+    ) {
+
+        const text =
+            rows[i]
+            .innerText
+            .toLowerCase();
+
+
+        if (text.includes(input)) {
+
+            rows[i].style.display = "";
+
+        }
+        else {
+
+            rows[i].style.display = "none";
+
+        }
+
+    }
+
+}
+
+
+/* ================= SETTINGS ================= */
+
+function saveSettings() {
+
+    alert(
+        "System settings saved successfully."
+    );
+
+}
+/* ================= INITIAL STATE ================= */
+
+document
+    .getElementById("app")
+    .style.display = "none";
+
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SIMGuard Fraud Detection</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:Arial;background:#f1f5f9;margin:0;color:#172033}
+header{background:#101c36;color:white;padding:20px;text-align:center}
+main{max-width:850px;margin:25px auto;padding:15px}
+section{background:white;padding:22px;border-radius:12px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+label{font-size:13px;font-weight:bold}
+input{width:100%;padding:10px;margin:6px 0 12px;box-sizing:border-box;border:1px solid #ccc;border-radius:6px}
+button{width:100%;padding:13px;background:#0f9b8e;color:white;border:0;border-radius:7px;cursor:pointer}
+#result{display:none}
+.badge{padding:8px;border-radius:15px;font-weight:bold}
+.low{background:#dcfce7;color:green}
+.medium{background:#fef3c7;color:#92400e}
+.high{background:#fee2e2;color:red}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header><h2>🛡 SIMGuard</h2>SIM Fraud Detection System</header>
+<main>
+<section>
+<h3>SIM Registration & Usage</h3>
+<form id="form"><div class="grid">
+<div><label>SIM ID</label><input id="sim" required></div>
+<div><label>Customer ID</label><input id="customer" required></div>
+<div><label>Age</label><input id="age" type="number" min="0" max="120" required></div>
+<div><label>Call Count</label><input id="calls" type="number" min="0" required></div>
+<div><label>SMS Count</label><input id="sms" type="number" min="0" required></div>
+<div><label>Data Usage GB</label><input id="data" type="number" min="0" step="any" required></div>
+<div><label>Unique Locations</label><input id="loc" type="number" min="0" required></div>
+<div><label>Unique Devices</label><input id="dev" type="number" min="0" required></div>
+<div><label>Recharge Count</label><input id="recharge" type="number" min="0" required></div>
+<div><label>International Calls</label><input id="intl" type="number" min="0" required></div>
+<div><label>SIM Age Days</label><input id="days" type="number" min="0" required></div>
+</div><button>Assess Fraud Risk</button></form>
+</section>
+<section id="result">
+<h3>Assessment Result</h3><p id="info"></p>
+<span id="badge" class="badge"></span>
+<p>Fraud Score: <b id="score"></b></p>
+<p>Prediction: <b id="prediction"></b></p>
+<p>Action: <b id="action"></b></p>
+<small>Demo rules only, not a trained ML prediction.</small>
+</section>
+</main>
+<script>
+const n=id=>Number(document.getElementById(id).value);
+form.onsubmit=e=>{
+e.preventDefault();
+if(n("age")>120)return alert("Enter a valid age");
+let s=0;
+if(n("calls")>150)s+=20;
+if(n("sms")>150)s+=10;
+if(n("data")>10)s+=10;
+if(n("loc")>5)s+=20;
+if(n("dev")>2)s+=15;
+if(n("intl")>5)s+=15;
+if(n("days")<30)s+=10;
+let r,p,a,c;
+if(s<=30){r="LOW";p="NORMAL SIM";a="Allow SIM";c="low"}
+else if(s<=60){r="MEDIUM";p="SUSPICIOUS SIM";a="Review SIM";c="medium"}
+else{r="HIGH";p="FRAUD SIM";a="Send for verification";c="high"}
+info.textContent="SIM: "+sim.value+" | Customer: "+customer.value;
+score.textContent=s+"/100";
+prediction.textContent=p;action.textContent=a;
+badge.textContent=r+" RISK";badge.className="badge "+c;
+result.style.display="block";
+};
+</script>
+</body>
+</html>
